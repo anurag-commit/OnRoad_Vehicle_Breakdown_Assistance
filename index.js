@@ -13,7 +13,7 @@ const SESSION_SECRET = 'mysecretkey';
 // Use cookie-parser middleware
 app.use(cookieParser());
 // Load environment variables
-dotenv.config({ path: 'config.env' });
+dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: true }));
 app.use(flash());
@@ -38,7 +38,7 @@ const adminsroute = require('./routes/adminsroute');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use('/css', express.static(path.resolve(__dirname, "views/css")));
+app.use(express.static(path.join(__dirname, 'views')));
 app.use('/IMG', express.static(path.resolve(__dirname, "views/IMG")));
 app.use('/js', express.static(path.resolve(__dirname, "views/js")));
 app.use('/vendor', express.static(path.resolve(__dirname, "views/vendor")));
@@ -53,3 +53,6 @@ app.use(authRoutes); // Mount the authentication routes
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+const cors = require("cors");
+app.use(cors());
